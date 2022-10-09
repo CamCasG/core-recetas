@@ -1,0 +1,34 @@
+#registro, #inicio{
+    border: 2px solid black;
+    margin-top: 20px;
+}
+
+#registro{
+    background: rgb(89,187,187);
+    background: linear-gradient(90deg, rgba(89,187,187,0.5298494397759104) 0%, rgba(0,170,228,1) 100%);
+}
+
+
+#inicio{
+    background: rgb(72,201,176);
+    background: linear-gradient(90deg, rgba(72,201,176,1) 0%, rgba(22,160,133,1) 35%, rgba(30,132,73,1) 100%);
+    height: 25rem;
+}
+
+#barra{
+    background: rgb(202,207,210);
+    background: radial-gradient(circle, rgba(202,207,210,1) 0%, rgba(112,123,124,1) 100%);
+}
+
+.recetas{
+    margin: 0 auto;
+    padding: 2.825rem;
+}
+
+.selector{
+    margin-top: 1.975rem;
+}
+
+#carta{
+    box-shadow: 3px 6px 3px black;
+}

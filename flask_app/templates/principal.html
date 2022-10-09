@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recetas</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+<body>
+
+    <!-- Barra navegadora -->
+    <nav class="d-flex justify-content-between align-items-center py-2 px-5" id="barra">
+        <h1 class="text-center text-light">Recetas</h1>
+        <h2 class="text-center text-dark">¡Bienvenido, {{usuario.nombre}}!</h2>
+        <a href="/receta/nueva" class="btn btn-success">Crear nueva receta</a>
+        <a href="/logout" class="btn btn-info">Cerrar sesión</a>
+    </nav>
+    
+
+    <div class="recetas">
+    <!-- Tabla información recetas -->
+    <div class="tabla" >
+        <h3>Recetas posteadas en la plataforma:</h3>
+    <table class="table table-striped p-2 col-2 mx-auto my-3">
+        <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">¿Realizado antes de 30 minutos?</th>
+            <th scope="col">Creador</th>
+            <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+            
+            {% for receta in todas_las_recetas %}
+            <tr>
+                <td>{{ receta.titulo_receta }}</td>
+                <td>{{ receta.under30 }}</td> 
+                <td>{{ receta.nombre }}</td>
+                <td>
+                    <a href="/receta/{{receta.id}}">Ver</a>
+                    {% if receta.usuario_id == session.user_id %}
+                    <a href="/receta/editar/{{receta.id}}">| Editar</a>
+                    <a href="/receta/eliminar/{{receta.id}}">| Borrar</a>
+                    {% endif %}
+                    {% if receta.usuario_id != session.user_id %}
+                    <form action="/receta/fav" method='POST'>
+                    <input type="hidden" name="id" value="{{session['user_id']}}">
+                    <input type="hidden" name="receta_id" value="{{una_receta.id}}">
+                        <button type="submit" class="btn btn-link"> Agregar a favoritos</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+        <h5 class="card-title">Tus recetas favoritas:</h5>
+        {% for receta in usuario.recetas_favoritas %}
+            <p> {{ receta.titulo_receta }} </p>
+        {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
