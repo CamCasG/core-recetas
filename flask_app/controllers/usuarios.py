@@ -64,6 +64,7 @@ def resultado():
         'id': session['user_id']
     }
 
+
     return render_template("principal.html", usuario=Usuario.get_by_id(data), todas_las_recetas=Receta.obtener_recetas(data), una_receta=Receta.obtener_una_receta(data))
 
 

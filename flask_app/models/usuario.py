@@ -90,3 +90,29 @@ class Usuario:
             flash("¡Alto ahí! No tienes edad suficiente para registrarte a nuesta página.", "registro")
 
         return is_valid
+
+
+    @classmethod
+    def receta_especifica(cls,data):
+        query = "SELECT * FROM recetas LEFT JOIN recetas_favoritas ON recetas.id = recetas_favoritas.receta_id LEFT JOIN usuarios ON usuarios.id = recetas_favoritas.nombre_id WHERE usuarios.id = %(id)s;"
+        resultados = connectToMySQL('esquema_recetas').query_db(query,data)
+        print(resultados)
+
+        receta = cls(resultados[0])
+
+        for row in resultados:
+
+            receta_data = {
+
+                "id": row['receta.id'],
+                "titulo_receta": row['titulo_receta'],
+                "descripcion": row['descripcion'],
+                "instrucciones": row['instrucciones'],
+                "fecha": row['fecha'],
+                "under30": row['under30'],
+                "usuario_id": row['usuario_id'],
+                "created_at": row['receta.created_at'],
+                "updated_at": row['receta.updated_at']
+            }
+            receta.recetas_favoritas.append(Receta(receta_data))
+        return receta
